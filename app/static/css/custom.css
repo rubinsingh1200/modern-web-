@@ -1,0 +1,23 @@
+body{
+	background: red;
+}
+.sidebar{
+	padding: 0px !important;
+    height: 100vh !important;
+    border: solid 1px #343a40;
+}
+.list-group-item:first-child{
+	border-top-left-radius: 0px !important;
+	border-top-right-radius: .0px !important;
+}
+.sidebar .list-group .list-group-item a{
+	text-decoration: none;
+	color: #495057;
+}
+.sidebar .list-group .active a{
+	color: white;
+}
+
+.form-row{
+	padding-top:20px;
+}

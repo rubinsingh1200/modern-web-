@@ -1,0 +1,58 @@
+{% extends "layout.html " %}
+{% block content %}
+<form method="post"  action="/news/create" enctype="multipart/form-data"> 
+{% csrf_token %}
+<script>
+	$(document).ready(()=>{
+	$(".sidebar").find(".active").removeClass("active");
+	$("#news").addClass("active");
+	});
+</script>
+<div class="row form-row">
+	<div class="col-md-6">
+		<div class="custom-file mb-2">
+            <label>Image</label>
+			<input type="file" name="image" class="custom-file-input" id="customFile">
+			<label class="custom-file-label" for="customFile">Choose file</label>
+		  </div>
+	</div>
+	<div class="col-md-6">
+		<div class="form-group">
+			<label>Title</label>
+			<input type="text" name="title" class="form-control" required>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div class="form-group">
+			<label>Category</label>
+			<select name="categories" class="form-control">
+				{% for category in categories %}
+					<option value="{{category.id}}">{{category.title}}</option>
+				{% endfor %}
+			</select>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div class="form-group">
+			<label>Content</label>
+			<textarea name="content" class="form-control" required></textarea>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div class="form-group">
+			<label>Date</label>
+			<input type="text" name="date" class="form-control form-date" required>
+		</div>
+	</div>
+	
+	<div class="col-md-6">
+		<div class="form-group">
+			<label>Author</label>
+			<input type="text" name="author" class="form-control" required>
+		</div>
+	</div>
+	
+</div>
+<button type="submit" class="btn btn-info"> Submit  </button>
+</form>
+{% endblock content %}

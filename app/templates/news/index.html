@@ -1,0 +1,69 @@
+{% extends "layout.html" %}
+{% block content %}
+{% load static %}
+
+<script>
+
+	$(document).ready(()=>{
+	$(".sidebar").find(".active").removeClass("active");
+	$("#news").addClass("active");
+
+	
+	});
+
+</script>
+<div class="col-md-6">
+	<a style="margin-top: 10px;margin-bottom: 10px"id="btnadd" href="news/create" class="btn btn-info">Add News</a>
+</div>
+
+
+<table class="table">
+	<tr>
+		<thead>
+			<th>Image</th>
+			<th>Title</th>
+			<th>Category</th>
+			<th>Content</th>
+			<th>Date</th>
+			<th>Author</th>
+			<th>ACTION</th>
+		</thead>
+		<tbody>
+			{% for new in news %}
+				<tr>
+					<td>
+							<img class="rounded" width="40" src="{% static '/images/'%}{{new.image}}"/>
+					</td>
+					<td>
+							{{new.title}}
+						
+					</td>					
+					<td>
+							{{new.categories.title}}
+						
+					</td>	
+					<td>
+							{{new.content|truncatechars:40}}
+				
+					</td>			
+					<td>
+							{{new.date}}
+						
+					</td>
+					<td>
+							{{new.author}}
+					
+					</td>
+					<td><a class=" " href="news/edit/{{new.id}}">Edit</a> | <a href="news/delete/{{new.id}}">Delete</a></td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</tr>
+</table>
+<form method="post" action="/news ">
+{% csrf_token %}
+	<button type="submit" name="prev" value="prev " id="prev">prev</button>
+	<input style="width:40px; "type="number" value="{{page}}" name="page" id="page"/>
+	<button type="submit" name="next" value="next" id="next ">next</button>
+</form>
+{% endblock content %}

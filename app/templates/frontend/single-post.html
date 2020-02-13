@@ -1,0 +1,20 @@
+{% extends "frontend/layout.html "%}
+{% block content %} 
+{% load static %}
+<div class="container">
+    <div class="row">
+        <div class="demo"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 border">
+            <h1>{{ news.first.title }}</h1>
+            <img src="/static/images/{{ news.first.image }}" width="60%">
+            <br>
+            <br>
+            <p>{{news.first.content }}</p>
+            <i class="fa fa-calender-check-o">Date:</i>{{news.first.date}}
+        </div>
+    </div>
+</div>
+<br>
+{% endblock content %}

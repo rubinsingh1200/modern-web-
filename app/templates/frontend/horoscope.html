@@ -1,0 +1,16 @@
+{% extends "frontend/layout.html "%}
+{% block content %} 
+<div class="container">
+    <div class="row">
+        <div class="demo"></div>
+    </div>
+    {% load static %}
+    {% for hor in horoscope %}
+    <div class="col-md-8 pl-10 border text-center">  
+            <a href="/frontend/hpost/{{ hor.id }}"><img src="{%static '/images/'%}{{hor.image}}" width="20%"></a>
+            <a href="/frontend/hpost/{{ hor.id }}">{{hor.name}}</a>
+    </div>   
+    {% endfor %}
+</div>
+<br>
+{% endblock content %}

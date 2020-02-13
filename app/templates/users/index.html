@@ -1,0 +1,90 @@
+{% extends "layout.html "%}
+{% block content %}
+<div class="row py-2">
+	<div class="col-md-6">
+		<a style="margin-top: 10px;margin-bottom: 10px"id="btnadd" href="users/create" class="btn btn-info">Add new members</a>
+	</div>
+	<div class="col-md-6">
+		<input style="margin-top: 10px;margin-bottom: 10px" type="text" id="search" class="form-control col-md-4 float-right" style="margin-left: 10px" />
+
+	</div>
+
+</div>
+<table class="table">
+	<tr>
+		<thead>
+			<th>ID</th>
+			<th>IMAGE</th>
+			<th>Name</th>
+			<th>Email</th>
+			<th>Password</th>
+			<th>ACTION</th>
+		</thead>
+		<tbody>
+			{% for usr in users %}
+				<tr>
+					<td> 
+						{{usr.user_id}}
+					</td>
+					{% load static %}
+					<td><img class=" rounded" width="40" src="{% static '/images/'%}{{usr.image}}"/>
+					</td>
+					<td>
+							{{usr.name}}
+						
+					</td>				
+					<td>
+							{{usr.email}}
+						
+					</td>				
+					<td>
+							{{usr.password}}
+						
+					</td>
+					<td><a class=" " href="users/edit/{{usr.user_id}}">Edit</a> | <a href="users/delete/{{usr.user_id}}">Delete</a></td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</tr>
+</table>
+<script>
+	$(document).ready(()=>{
+	$(".sidebar").find(".active").removeClass("active");
+	$("#user").addClass("active");
+		$("#search").keyup(()=>{
+			$.ajax({
+				data:{search:$("#search").val()},
+				url:'/search',
+				method:'GET',
+				success:function(data){
+					console.log(data);
+					$("tr").not("tr.first").remove();
+					var html="";
+					for(d of data){
+						html+="<tr>";
+							html+="<td>"+d.user_id+"</td>";
+							html+="<td><img class='rounded' width='40' src='{% static '/images/' %}"+d.image+"' /></td>";
+							html+="<td>"+d.name+"</td>";
+							html+="<td>"+d.email+"</td>";
+							html+="<td>"+d.password+"</td>";
+							html+="<td><a href='/edit/"+d.user_id+"'>edit</a>  |  <a href='/delete/"+d.user_id+"'>delete</a></td>";
+						html+="</tr>"
+
+					}
+					$("table").append(html);
+				},error:function(error){
+					console.log(error)
+				},complete:function(){
+					console.log("complete")
+				}
+			})
+		})
+	})
+</script>
+<form method="post" action="/users ">
+{% csrf_token %}
+	<button type="submit" name="prev" value="prev " id="prev">prev</button>
+	<input style="width:40px; "type="number" value="{{page}}" name="page" id="page"/>
+	<button type="submit" name="next" value="next" id="next ">next</button>
+</form>
+{% endblock content %}

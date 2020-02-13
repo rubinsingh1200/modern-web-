@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% load static %}
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link href="{% static 'frontend/css/main.css'%}" rel="stylesheet" />
+<link href="{% static 'css/bootstrap-datepicker.css'%}" rel="stylesheet" />
+<script src="{% static 'js/jquery-3.4.1.min.js'%}" ></script> 
+<link rel="stylesheet" href="{% static 'css/custom.css' %}">
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+<link rel="icon" href="{% static 'images/logo1.png/' %}" type="image/png" sizes="16x16">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+     
+    <body>
+    <div class="container">
+        <header>
+            <a href="/">
+                <img src="{%static 'frontend/images/logo1.png'%}" alt="ktmnow" class="logo">
+            </a>
+        </header >
+        <nav>
+            <a href="#" class="hide-desktop">
+                <img src="{% static 'images/ham.svg'%}" alt="toggle menu" class="menu" id="menu">
+            </a>
+
+            <ul class="show-desktop hide-mobile" id="nav">
+                <li id="exit" class="exit-btn hide-desktop">
+                    <img src="{% static 'images/exit.svg'%}" alt="exit menu">
+                </li>
+                <li><a href="/">Home</a></li>
+                {% for category in categories %}
+                <li><a href="/frontend/category/{{category.id}}">{{category.title}}</a></li>
+                
+                {% endfor %}
+                <li><a href="/frontend/horoscope">Horoscope</a></li>
+                <li><a href="/frontend/about-us">About</a></li>
+                <li><a href="/frontend/contact">Contact</a></li>
+
+
+                
+            </ul>
+        </nav>
+      </div>
+    
+
+<br>
+<br>
+<br>
+<br>
+{% block content %} 
+{% endblock content %}
+      <footer>
+        <div class="footer-container">
+            <div class="container">
+                <a href="#">
+                    <img src="{%static 'frontend/images/logo1.png'%}" class="logof" alt="logo">
+                </a>
+                <p class="address">Sankhamul,Shreenagarmarg<br>Nepal</p>
+                <ul class="footer-links">
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="/frontend/privacy">Privacy Policy</a></li>
+                </ul>  
+            </div>
+            <div class="container">
+                <div class="row">
+                  <div class="col">
+                    <ul class="social-network social-circle">
+                      <li><a href="https://rss.com/" class="icoRss" title="Rss"><i class="fa fa-rss"></i></a></li>
+                      <li><a href="https://www.facebook.com/" class="icoFacebook" title="Facebook"><i class="fa fa-facebook"></i></a></li>
+                      <li><a href="https://twitter.com/" class="icoTwitter" title="Twitter"><i class="fa fa-twitter"></i></a></li>
+                      <li><a href="https://google.com/" class="icoGoogle" title="Google +"><i class="fa fa-google-plus"></i></a></li>
+                      <li><a href="https://Linkedin.com/" class="icoLinkedin" title="Linkedin"><i class="fa fa-linkedin"></i></a></li>
+                    </ul>
+                  </div>
+                </div>
+                <a href="/admin"><button type="button" class="btn btn-dark">Admin Login</button></a>
+              </div>
+        </div>
+    </footer>
+    <script>
+    
+      var menu = document.getElementById('menu');
+      var nav = document.getElementById('nav');
+      var exit = document.getElementById('exit');
+
+      menu.addEventListener('click', function(e) {
+          nav.classList.toggle('hide-mobile');
+          e.preventDefault();
+      });
+
+      exit.addEventListener('click', function(e) {
+          nav.classList.add('hide-mobile');
+          e.preventDefault();
+      });
+
+  </script>
+  </body>
+</html>
+
+
+

@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% block content %}
+<script>
+	$(document).ready(()=>{
+	$(".sidebar").find(".active").removeClass("active");
+	$("#advert").addClass("active");
+	});
+</script>
+<div class="col-md-6">
+	<a style="margin-top: 10px;margin-bottom: 10px"id="btnadd" href="advert/create" class="btn btn-info">Add Advertisements</a>
+</div>
+<table class="table">
+	<tr>
+		<thead>
+			<th>Title</th>
+			<th>Image</th>
+		</thead>
+		<tbody>
+			{% for ad in advert %}
+				<tr>
+                    {% load static %}
+                    <td>
+                            {{ad.title}}
+                    
+                    </td>	
+					<td>
+							<img class="rounded" width="40" src="{% static '/images/'%}{{ad.image}}"/>
+					</td>
+					<td><a class=" " href="advert/edit/{{ad.id}}">Edit</a> | <a href="advert/delete/{{ad.id}}">Delete</a></td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</tr>
+</table>
+{% endblock content %}

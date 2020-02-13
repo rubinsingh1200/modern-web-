@@ -1,0 +1,61 @@
+{% extends "layout.html "%}
+{% block content %}
+<form method="post" action="/news/update/{{news.id}}" enctype="multipart/form-data">
+{% csrf_token %}
+<script>
+    $(document).ready(()=>{
+        $(".sidebar").find(".active").removeClass("active");
+        $("#news").addClass("active");
+	})
+</script>
+
+<div class="row form-row">
+{% load static %}
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>Image</label>
+            <img width="100" src="{% static '/images/'%}{{news.image}}" />
+            <input type="file" name="image" class="form-control" />
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>Title</label>
+            <input type="text" value="{{news.title}}" name="title" class="form-control" required/>
+        </div>
+    </div>
+    <div class="col-md-6">
+		<div class="form-group">
+			<label>Category</label>
+			<select name="categories" class="form-control">
+				{% for category in categories %}
+					<option value="{{category.id}}">{{category.title}}</option>
+				{% endfor %}
+			</select>
+		</div>
+    </div>
+    <div class="col-md-6">
+		<div class="form-group">
+			<label>Content</label>
+			<textarea name="content" class="form-control" required>{{news.content}}</textarea>
+		</div>
+	</div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>Date</label>
+            <input type="text" value="{{news.date}}" name="date" class="form-control form-date" required/>
+        </div>
+    </div> 
+    <div class="col-md-6">
+		<div class="form-group">
+			<label>Author</label>
+			<input type="text" name="author" class="form-control"  value="{{news.author}}" required>
+		</div>
+	</div>
+
+
+    
+    <button type="submit" class="btn btn-info">Submit</button>
+</form>
+{% endblock content %}
+</div>

@@ -1,0 +1,21 @@
+{% extends "frontend/layout.html "%}
+{% block content %} 
+{% load static %}
+<div class="container">
+    <div class="row">
+        <div class="demo"></div>
+    </div>
+    <div class="row border shadow p-4 mb-6 bg-white rounded text-center">
+        <div class="col-md-12">
+            <h2>{{ horoscope.first.name }}</h2>
+            <img src="/static/images/{{ horoscope.first.image }}" width="20%">
+            <br>
+            <br>
+            <h3>Today's horoscope</h3>
+            <i class="fa fa-calender-check-o">Date:</i>{{horoscope.first.date}}
+            <p class="text-left">{{horoscope.first.content}}</p>
+        </div>
+    </div>
+    <br>
+</div>
+{% endblock content %}

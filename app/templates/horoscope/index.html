@@ -1,0 +1,87 @@
+{% extends "layout.html "%}
+{% block content %}
+{% load static %}
+
+<script>
+	$(document).ready(()=>{
+	$(".sidebar").find(".active").removeClass("active");
+	$("#horoscope").addClass("active");
+	$("#search").keyup(()=>{
+			$.ajax({
+				data:{search:$("#search").val()},
+				url:'horoscope/search',
+				method:'GET',
+				success:function(data){
+					console.log(data);
+					$("tr").not("tr.first").remove();
+					var html="";
+					for(d of data){
+						html+="<tr>";
+							html+="<td>"+d.id+"</td>";
+							html+="<td>"+d.name+"</td>";
+							html+="<td>"+d.date+"</td>";
+							html+="<td>"+d.content+"</td>";
+							html+="<td><img class='rounded' width='40' src='{% static '/images/' %}"+d.image+"' /></td>";
+
+							html+="<td><a href='horoscope/edit/"+d.id+"'>edit</a>  |  <a href='horoscope/delete/"+d.id+"'>delete</a></td>";
+						html+="</tr>"
+
+					}
+					$("table").append(html);
+				},error:function(error){
+					console.log(error)
+				},complete:function(){
+					console.log("complete")
+				}
+			})
+		})
+	});
+</script>
+<div class="row py-2">
+	<div class="col-md-6">
+		<a style="margin-top: 10px;margin-bottom: 10px"id="btnadd" href="horoscope/create" class="btn btn-info">Add new horoscope</a>
+	</div>
+	<div class="col-md-6">
+		<input style="margin-top: 10px;margin-bottom: 10px" type="text" id="search" class="form-control col-md-4 float-right" style="margin-left: 10px" />
+
+	</div>
+</div>
+
+<table class="table">
+	<tr>
+		<thead>
+			<th>Image</th>
+			<th>Name</th>
+			<th>Content</th>
+			<th>Date</th>
+		</thead>
+		<tbody>
+			{% for horo in horoscope %}
+				<tr>
+					<td><img class=" rounded" width="40" src="{% static '/images/'%}{{horo.image}}"/>
+					</td>
+					<td>
+							{{horo.name}}
+						
+					</td>				
+					<td>
+							{{horo.content|truncatechars:40}}
+						
+					</td>				
+					<td>
+							{{horo.date}}
+						
+					</td>
+					<td><a class=" " href="horoscope/edit/{{horo.id}}">Edit</a> | <a href="horoscope/delete/{{horo.id}}">Delete</a></td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</tr>
+</table>
+<form method="post" action="/horoscope ">
+{% csrf_token %}
+	<button type="submit" name="prev" value="prev " id="prev">prev</button>
+	<input style="width:40px; "type="number" value="{{page}}" name="page" id="page"/>
+	<button type="submit" name="next" value="next" id="next ">next</button>
+</form>
+{% endblock content %}

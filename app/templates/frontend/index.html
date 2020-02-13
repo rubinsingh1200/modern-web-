@@ -1,0 +1,65 @@
+{% extends "frontend/layout.html "%}
+{% block content %} 
+{% load static %}
+<div class="container-1">
+    <div class="row home-row">
+        <div class="col-md-9">
+            {% for c in categories %}
+
+            <div id="style1" >
+                <div class="box-border">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="cat-title"><a href="/frontend/category/{{c.id}}">{{ c.title }}
+                            </a> </div>
+                        </div>
+                    </div>		
+        
+            <div class="row"> 
+                {% for pst in c.posts_set.all|slice:"1" %}
+                {% if forloop.counter is 1 %}
+                <div class="col-md-6">
+                    <a href="/frontend/post/{{ pst.id }}"><img class="big-feature-img" src="{%static '/images/'%}{{pst.image}}"></a>
+                    <div class="big-post-title"><a href="/frontend/post/{{ pst.id }}">{{pst.title}}</a> </div>
+                    <div class="big-post-text">{{pst.content|truncatechars:130}}</div>
+                    <div class="comments">
+                        <i class="fa fa-calender-check-o"></i>{{pst.date}}&nbsp;&nbsp;&nbsp;
+                    </div>   
+                </div>
+                {% endif %}
+                {% endfor %}
+                
+                <div class="col-md-6">
+                {% for pst in c.posts_set.all|slice:"4" %}
+                    {% if forloop.counter is not 1 %}
+                    <div class="post-card">
+                        <a href="/frontend/post/{{ pst.id }}"><img class="small-feature-img" src="{%static '/images/'%}{{pst.image}}"></a>
+                        <div class="small-post-title"><a href="frontend/post/{{ pst.id }}">{{ pst.title }}</a> </div>
+                        <div class="small-post-text">{{pst.content|truncatechars:110}}</div> 
+                    </div>
+                    {% endif %} 
+                
+                {% endfor %}
+                </div>
+            </div>
+        </div>
+        </div>
+        {% endfor %}
+
+        </div>
+  
+
+<div class="col-md-3">
+    {% for ad in advert %}
+    <img src="{%static '/images/'%}{{ad.image}}" title="Advertisement" style="max-width: 290px;margin-bottom: 10px;">
+    {% endfor %}
+</div>
+</div>
+
+   
+    
+</div>
+
+
+<br>
+{% endblock content %}

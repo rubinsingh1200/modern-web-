@@ -1,0 +1,30 @@
+{% extends "layout.html "%}
+{% block content %}
+<form method="post" action="/advert/update/{{advert.id}}" enctype="multipart/form-data">
+{% csrf_token %}
+<script>
+    $(document).ready(()=>{
+        $(".sidebar").find(".active").removeClass("active");
+        $("#advert").addClass("active");
+	})
+</script>
+
+<div class="row form-row">
+{% load static %}
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>Title</label>
+            <input type="text" value="{{advert.title}}" name="title" class="form-control" />
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>Image</label>
+            <img width="100" src="{% static '/images/'%}{{advert.image}}" />
+            <input type="file" name="image" class="form-control" />
+        </div>
+    </div>
+    <button type="submit" class="btn btn-info">Submit</button>
+</form>
+{% endblock content %}
+</div>

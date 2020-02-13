@@ -1,0 +1,47 @@
+{% extends "frontend/layout.html "%}
+{% block content %} 
+{% load static %}
+<div class="container-1">
+    <div class="row">
+        <div class="demo"></div>
+    </div>
+    <section id="style1" class="col-md-12">
+        <div class="box-border">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="cat-title"><a href="#">{{category.title}}
+                    </a> </div>
+                </div>
+            </div>		
+            <div class="row"> 
+                {% for pst in category.posts_set.all %}
+                {% if forloop.counter is 1 %}
+                <div class="col-md-6">
+                    <a href="/frontend/post/{{ pst.id }}"><img class="big-feature-img" src="{%static '/images/'%}{{pst.image}}"></a>
+                    <div class="big-post-title"><a href="/frontend/post/{{ pst.id }}">{{pst.title}}</a> </div>
+                    <div class="big-post-text">{{pst.content|truncatechars:400}}</div>
+                    <div class="comments">
+                        <i class="fa fa-calender-check-o"></i>{{pst.date}}&nbsp;&nbsp;&nbsp;
+                    </div>   
+                </div>
+                {% endif %}
+                {% endfor %}
+                
+                <div class="col-md-6">
+                {% for pst in category.posts_set.all %}
+                    {% if forloop.counter is not 1 %}
+                    <div class="post-card">
+                        <a href="/frontend/post/{{ pst.id }}"><img class="small-feature-img" src="{%static '/images/'%}{{pst.image}}"></a>
+                        <div class="small-post-title"><a href="frontend/post/{{ pst.id }}">{{ pst.title }}</a> </div>
+                        <div class="small-post-text">{{pst.content|truncatechars:200}}</div> 
+                    </div>
+                    {% endif %} 
+                
+                {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<br>
+{% endblock content %}
