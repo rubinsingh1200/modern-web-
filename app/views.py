@@ -13,8 +13,7 @@ from django.http import HttpResponse,JsonResponse
 from app.authenticate import Authenticate
 from django.contrib import messages
 
-#---------------------------------------for backend-------------------------------------------------------------
-# @Authenticate.guest
+#---------------------------------------for backend admin side -------------------------------------------------------------
 def login(request):
 	return render(request,'login.html')
 
@@ -78,14 +77,14 @@ def usersEdit(request,id):
 	user=User.objects.get(user_id=id)
 	return render(request,'users/edit.html',{'user':user})
 
-@Authenticate.valid_user
+# @Authenticate.valid_user
 def usersUpdate(request,id):
 	user=User.objects.get(user_id=id)
 	form=UserForm(request.POST,request.FILES,instance=user)
 	form.save()
 	return redirect('/users')
 
-@Authenticate.valid_user
+
 def usersDelete(request,id):
 	user=User.objects.get(user_id=id)
 	if(user.image!='img.jpg'):
@@ -99,7 +98,7 @@ def search(request):
 
 
 # ----------------------------------------for news--------------------------------------------------------------- 
-
+@Authenticate.valid_user
 def newsIndex(request):
 	page=1
 	if request.method=="POST":
@@ -112,9 +111,9 @@ def newsIndex(request):
 		offset=0
 		if tempoffset > 0:
 			offset=tempoffset * limit
-		news =Posts.objects.raw("select * from posts limit 5 offset %s",[offset])
+		news =Posts.objects.raw("select * from  posts order by id desc limit 5 offset %s",[offset])
 	else:
-		news =Posts.objects.raw("select * from posts limit 5 offset 0")
+		news =Posts.objects.raw("select * from posts order by id desc limit 5 offset 0")
 	count=Posts.objects.count()
 	return render(request,"news/index.html",{'news':news,'counts':count,'page':page})
 
@@ -129,20 +128,20 @@ def newsCreate(request):
 	categories = Categories.objects.all()
 	return render(request,'news/create.html',{'form':form, 'categories': categories})
 
-# @Authenticate.valid_user_with_id
+
 def newsEdit(request,id):
 	news=Posts.objects.get(id=id)
 	categories = Categories.objects.all()
 	return render(request,'news/edit.html',{'news':news,'categories':categories})
 
-@Authenticate.valid_user_with_id
+# @Authenticate.valid_user_with_id
 def newsUpdate(request,id):
 	news=Posts.objects.get(id=id)
 	form=NewsForm(request.POST,request.FILES,instance=news)
 	form.save()
 	return redirect('/news')
 
-@Authenticate.valid_user_with_id
+
 def newsDelete(request,id):
 	news=Posts.objects.get(id=id)
 	if(news.image!='img.jpg'):
@@ -155,7 +154,7 @@ def newsDelete(request,id):
 
 
 #  -----------------------------------------for horoscope------------------------------------------------------------
-
+@Authenticate.valid_user
 def hoIndex(request):
 	page=1
 	if request.method=="POST":
@@ -168,9 +167,9 @@ def hoIndex(request):
 		offset=0
 		if tempoffset > 0:
 			offset=tempoffset * limit
-		horoscope =Horoscope.objects.raw("select * from horoscope limit 6 offset %s",[offset])
+		horoscope =Horoscope.objects.raw("select * from horoscope order by id desc limit 6 offset %s",[offset])
 	else:
-		horoscope =Horoscope.objects.raw("select * from horoscope limit 6 offset 0")
+		horoscope =Horoscope.objects.raw("select * from horoscope order by id desc limit 6 offset 0")
 	count=Posts.objects.count()
 	return render(request,"horoscope/index.html",{'horoscope':horoscope,'counts':count,'page':page})
 
@@ -184,7 +183,7 @@ def hoCreate(request):
 	form=HoForm()
 	return render(request,'horoscope/create.html',{'form':form})
 
-# @Authenticate.valid_user_with_id
+
 def hoEdit(request,id):
 	horoscope=Horoscope.objects.get(id=id)
 	return render(request,'horoscope/edit.html',{'horoscope':horoscope})
@@ -196,7 +195,7 @@ def hoUpdate(request,id):
 	form.save()
 	return redirect('/horoscope')
 
-@Authenticate.valid_user_with_id
+
 def hoDelete(request,id):
 	horoscope=Horoscope.objects.get(id=id)
 	if(horoscope.image!='img.jpg'):
@@ -223,9 +222,9 @@ def aIndex(request):
 		offset=0
 		if tempoffset > 0:
 			offset=tempoffset * limit
-		advert = Advert.objects.raw("select * from advert limit 6 offset %s",[offset])
+		advert = Advert.objects.raw("select * from advert order by id desc limit 6 offset %s",[offset])
 	else:
-		advert = Advert.objects.raw("select * from advert limit 6 offset 0")
+		advert = Advert.objects.raw("select * from advert order by id desc limit 6 offset 0")
 	count=Posts.objects.count()
 	return render(request,"advert/index.html",{'advert':advert,'counts':count,'page':page})
 
@@ -239,7 +238,7 @@ def aCreate(request):
 	form=AForm()
 	return render(request,'advert/create.html',{'form':form})
 
-# @Authenticate.valid_user_with_id
+
 def aEdit(request,id):
 	advert=Advert.objects.get(id=id)
 	return render(request,'advert/edit.html',{'advert':advert})
@@ -251,7 +250,7 @@ def aUpdate(request,id):
 	form.save()
 	return redirect('/advert')
 
-@Authenticate.valid_user_with_id
+
 def aDelete(request,id):
 	advert=Advert.objects.get(id=id)
 	if(advert.image!='img.jpg'):
