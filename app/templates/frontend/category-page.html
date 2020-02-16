@@ -32,7 +32,7 @@
                     {% if forloop.counter is not 1 %}
                     <div class="post-card">
                         <a href="/frontend/post/{{ pst.id }}"><img class="small-feature-img" src="{%static '/images/'%}{{pst.image}}"></a>
-                        <div class="small-post-title"><a href="frontend/post/{{ pst.id }}">{{ pst.title }}</a> </div>
+                        <div class="small-post-title"><a href="/frontend/post/{{ pst.id }}">{{ pst.title }}</a> </div>
                         <div class="small-post-text">{{pst.content|truncatechars:200}}</div> 
                     </div>
                     {% endif %} 
